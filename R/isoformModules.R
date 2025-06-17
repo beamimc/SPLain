@@ -45,8 +45,8 @@ isoformAnalysisUI <- function(id) {
                             "Isoform Structures"),
                    tags$div(class = "card-body",
                             # imageOutput(ns("gene_plot"), width = "100%")
-                            plotlyOutput(ns("isoform_plot"), width = "100%")
-                            
+                            plotly::plotlyOutput(ns("isoform_plot"), width = "100%")
+
                    )
           )
         ),
@@ -58,7 +58,7 @@ isoformAnalysisUI <- function(id) {
                    tags$div(class = "card-header bg-primary text-white", 
                             textOutput(ns("barplot_title"))),
                    tags$div(class = "card-body",
-                            plotlyOutput(ns("barplot"), width = "100%")
+                            plotly::plotlyOutput(ns("barplot"), width = "100%")
                    )
           )
         ),
@@ -69,7 +69,7 @@ isoformAnalysisUI <- function(id) {
           tags$div(class = "card mb-3",
                    tags$div(class = "card-header bg-primary text-white", "Transcript Proportions by Condition"),
                    tags$div(class = "card-body",
-                            plotlyOutput(ns("lineplot"), width = "100%")
+                            plotly::plotlyOutput(ns("lineplot"), width = "100%")
                    )
           )
         )

@@ -14,7 +14,7 @@ exonLevelUI <- function(id) {
                       tags$div(class = "card-header bg-primary text-white", 
                                "Isoform Structures with selected exons"),
                       tags$div(class = "card-body",
-                               plotlyOutput(ns("exon_level_plot"), width = "100%"))
+                               plotly::plotlyOutput(ns("exon_level_plot"), width = "100%"))
                       )
               )
     ),
