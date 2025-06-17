@@ -57,7 +57,7 @@ get_downstream_from_GRanges <- function(GRanges,
 ){
   
   upstr_exons <- GRanges %>%
-    flank_downstream(width = width_upstream) 
+    plyranges::flank_downstream(width = width_upstream)
   # The result will be another GRanges object that still contains 158 ranges,
   # but each range now represents the upstream flanking region of the corresponding exon. 
   
@@ -72,7 +72,7 @@ get_upstream_from_GRanges <- function(GRanges,
 ){
   
   upstr_exons <- GRanges %>%
-    flank_upstream(width = width_upstream) 
+    plyranges::flank_upstream(width = width_upstream)
   # The result will be another GRanges object that still contains 158 ranges,
   # but each range now represents the upstream flanking region of the corresponding exon. 
   

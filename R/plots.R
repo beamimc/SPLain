@@ -324,7 +324,7 @@ go_plot2 <- function(gene_symbol_list){
 
   # ─── Build one plot per ontology ─────────────────────────────────────────────
   plots <- lapply(c("BP", "MF", "CC"), function(ont) {
-    ego <- enrichGO(
+    ego <- clusterProfiler::enrichGO(
       gene       = gene_symbol_list,
       OrgDb      = org.Hs.eg.db,
       keyType    = "SYMBOL",
@@ -363,9 +363,9 @@ go_plot <- function(gene_symbol_list) {
       theme_void()
   }
 
-  # Run enrichGO + return barplot per ontology
+  # Run clusterProfiler::enrichGO + return barplot per ontology
   plots <- lapply(c("BP", "MF", "CC"), function(ont) {
-    ego <- enrichGO(
+    ego <- clusterProfiler::enrichGO(
       gene          = gene_symbol_list,
       OrgDb         = org.Hs.eg.db,
       keyType       = "SYMBOL",

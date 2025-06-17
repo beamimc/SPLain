@@ -26,7 +26,7 @@ exons <- readRDS(here::here("data", "glinos_exons.rds")) ##GRangesList
 #column in hardcoded -- change
 get_sig_res <- function(fdr_threshold = 0.1){
   sig_res <- rowData(se)[["fitDTUResult_exp_vs_ctrl"]] |>
-    tibble::as_tibble() |>
+    tibble::tibble::as_tibble() |>
     dplyr::bind_cols(as.data.frame(rowData(se)[,1:4])) |>
     dplyr::filter(empirical_FDR < fdr_threshold) |>
     dplyr::select(gene_id, isoform_id, symbol, estimates, empirical_pval, empirical_FDR) |>
@@ -38,8 +38,8 @@ get_sig_res <- function(fdr_threshold = 0.1){
   
 }
 
-sig_res <- get_sig_res(0.1) |> 
-            as_tibble()
+sig_res <- get_sig_res(0.1) |>
+            tibble::as_tibble()
 sig_res <-  sig_res %>%
   dplyr::mutate(sign = sign(estimates))
 

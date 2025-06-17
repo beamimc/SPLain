@@ -35,7 +35,7 @@ gr |>
     total_width = sum(width),
     intersection_width = sum(width[cover > 1]),
     overlap_score = sum(width[cover > 1]) /sum(width)
-  )|> as_tibble() |> print(n=25)
+  )|> tibble::as_tibble() |> print(n=25)
 
 
 
@@ -50,7 +50,7 @@ table <- gr |>
     end = max(end)
     
     )|>
-  as_tibble() |> print(n=25)
+  tibble::as_tibble() |> print(n=25)
 
 
 

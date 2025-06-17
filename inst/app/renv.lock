@@ -6693,7 +6693,7 @@
       "RoxygenNote": "7.3.2.9000",
       "Config/testthat/edition": "3",
       "Config/testthat/parallel": "true",
-      "Config/testthat/start-first": "vignette-formats, as_tibble, add, invariants",
+      "Config/testthat/start-first": "vignette-formats, tibble::as_tibble, add, invariants",
       "Config/autostyle/scope": "line_breaks",
       "Config/autostyle/strict": "true",
       "Config/autostyle/rmd": "false",

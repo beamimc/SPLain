@@ -21,7 +21,7 @@
 #' @param stringSet An RNAStringSet object.
 #' @return A matrix with counts of each nucleotide.
 get_bp_count <- function(stringSet){ # input is RNAStringSet object
-  bp_counts <- oligonucleotideFrequency(stringSet, width = 1)
+  bp_counts <- Biostrings::oligonucleotideFrequency(stringSet, width = 1)
 }
 
 #######################################################
@@ -35,7 +35,7 @@ get_bp_count <- function(stringSet){ # input is RNAStringSet object
 #' @param stringSet An RNAStringSet object.
 #' @return A matrix with percentage (proportions) of each nucleotide.
 get_bp_percent <- function(stringSet){
-  bp_counts <- oligonucleotideFrequency(stringSet, width = 1)
+  bp_counts <- Biostrings::oligonucleotideFrequency(stringSet, width = 1)
   bp_percent <-  bp_counts / rowSums(bp_counts)
 }
 
@@ -50,7 +50,7 @@ get_bp_percent <- function(stringSet){
 #' @param stringSet An RNAStringSet object.
 #' @return A matrix with percentages for each di-nucleotide.
 get_dibp_features <- function(stringSet){
-  di_freq <- oligonucleotideFrequency(stringSet, width = 2)
+  di_freq <- Biostrings::oligonucleotideFrequency(stringSet, width = 2)
   di_perc <- di_freq / (width(stringSet) - 1) # equivalent to rowSums per sequence normalization
 }
 
@@ -65,7 +65,7 @@ get_dibp_features <- function(stringSet){
 #' @param stringSet An RNAStringSet object.
 #' @return A matrix with percentages for each tri-nucleotide.
 get_tribp_features <- function(stringSet){
-  tri_freq <- oligonucleotideFrequency(stringSet, width = 3)
+  tri_freq <- Biostrings::oligonucleotideFrequency(stringSet, width = 3)
   tri_perc <- tri_freq / (width(stringSet) - 2)
 }
 
@@ -89,8 +89,8 @@ get_windows<- function(upstr_ranges, # input is GRanges object
   n_windows <- width_upstream / window_width # number of windows generated given the total region length
   windows <- upstr_ranges |> tile_ranges(window_width) # divide into windows
   seq_windows <-  Hsapiens |>
-    getSeq(windows) |>
-    RNAStringSet()
+    Biostrings::getSeq(windows) |>
+    Biostrings::RNAStringSet()
   # RNAStringSet result has n_windows * (# of exons) rows, e.g. for 158 exons and 10 windows, we get 1580 rows.
   windows_bp <- get_bp_percent(seq_windows) # calculate %bp for all windows
 
@@ -132,11 +132,11 @@ get_sliding_windows <- function(upstr_ranges, # input is GRanges object
   step <-  window_width - overlap
   n_windows <- ceiling((width_upstream - window_width) / step) + 1
 
-  windows <- upstr_ranges |> slide_ranges( width = window_width,  # GRanges
+  windows <- upstr_ranges |> plyranges::slide_ranges( width = window_width,  # GRanges
                                            step = step) # divide into windows
   seq_windows <-  Hsapiens |>
-    getSeq(windows) |>
-    RNAStringSet()  # RNAStringSet
+    Biostrings::getSeq(windows) |>
+    Biostrings::RNAStringSet()  # RNAStringSet
   # The RNAStringSet result has n_windows * (# of exons) rows.
   windows_bp <- get_bp_percent(seq_windows) # calculate %bp for all windows
 
@@ -146,7 +146,7 @@ get_sliding_windows <- function(upstr_ranges, # input is GRanges object
   # combined <- cbind(windows_bp, windows_meta)
   #
   # windows_df <- as.data.frame(combined)
-  tb <- as_tibble(windows)            # seqnames, start, end, strand, partition, etc.
+  tb <- tibble::as_tibble(windows)            # seqnames, start, end, strand, partition, etc.
   windows_meta <- tb[, c("strand","partition")]
   combined     <- cbind(windows_bp, windows_meta)
   windows_df   <- as.data.frame(combined)
@@ -480,7 +480,7 @@ get_downstream_from_GRanges <- function(GRanges,
                 ){
 
   upstr_exons <- GRanges %>%
-    flank_downstream(width = width_upstream)
+    plyranges::flank_downstream(width = width_upstream)
   # The result will be another GRanges object that still contains 158 ranges,
   # but each range now represents the upstream flanking region of the corresponding exon.
 
