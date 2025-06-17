@@ -1,5 +1,5 @@
 
-my_theme <- bs_theme(version = 5, bootswatch = "yeti")
+my_theme <- bslib::bs_theme(version = 5, bootswatch = "yeti")
 width_upstream <- 100
 
 # # Palette for negative values: from red (-1) to gray (0)
