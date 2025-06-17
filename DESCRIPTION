@@ -28,7 +28,6 @@ Imports:
     utils,
     config,
     shinycssloaders,
-    shiny,
     bslib,
     DT,
     plotly,
@@ -54,7 +53,8 @@ Imports:
     assertthat,
     GenomeInfoDb
 Depends:
-    R (>= 4.4.0)
+    R (>= 4.4.0),
+    shiny
 Suggests:
     devtools,
     knitr,
