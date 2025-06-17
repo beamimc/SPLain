@@ -16,13 +16,13 @@ width_upstream <- 100
 # 
 
 # Palette for negative values: from red (-1) to gray (0)
-pal_neg <- col_numeric(
+pal_neg <- scales::col_numeric(
   palette = c("#FC6C85", "#E0E0E0"),
   domain = c(-1, .8)
 )
 
 # Palette for positive values: from gray (0) to blue (1)
-pal_pos <- col_numeric(
+pal_pos <- scales::col_numeric(
   palette = c("#E0E0E0",  "#5DADEC"),
   domain = c(0.8, 1)
 )
