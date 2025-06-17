@@ -1,0 +1,43 @@
+Package: SPLain
+Title: DTU
+Version: 0.0.9999
+Authors@R: c(
+    person("Beatriz", "Campillo Miñano", email = "beacm@unc.edu", role = c("aut", "cre"),
+    comment = c()),
+    person("Michael", "Love", email = "michaelisaiahlove@gmail.com", role = "aut",
+    comment = c(ORCID = "0000-0001-8401-0545")))
+Description: Some description...
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+VignetteBuilder: knitr
+Imports:
+    BiocGenerics,
+    BiocStyle,
+    GenomicRanges,
+    IRanges,
+    S4Vectors,
+    SummarizedExperiment,
+    rlang,
+    dplyr,
+    tidyr,
+    ggplot2,
+    ggrepel,
+    stats,
+    utils
+Depends:
+    R (>= 4.4.0)
+Suggests:
+    devtools,
+    knitr,
+    rmarkdown,
+    testthat,
+    airway,
+    IRanges,
+    here
+LazyData: true
+URL: https://github.com/beamimc/SPLain, https://Beamimc.github.io/SPLain
+BugReports: https://github.com/beamimc/SPLain/issues
+biocViews: Annotation, GenomeAnnotation, Transcriptomics
+Config/testthat/edition: 3
