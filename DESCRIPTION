@@ -25,7 +25,32 @@ Imports:
     ggplot2,
     ggrepel,
     stats,
-    utils
+    utils,
+    config,
+    shinycssloaders,
+    shiny,
+    bslib,
+    DT,
+    plotly,
+    reactable,
+    scales,
+    purrr,
+    stringr,
+    grid,
+    patchwork,
+    GenomicFeatures,
+    org.Hs.eg.db,
+    GO.db,
+    biomaRt,
+    Biostrings,
+    BSgenome.Hsapiens.UCSC.hg38,
+    clusterProfiler,
+    enrichplot,
+    plyranges,
+    reshape2,
+    viridis,
+    RColorBrewer,
+    here
 Depends:
     R (>= 4.4.0)
 Suggests:
