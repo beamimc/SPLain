@@ -3,12 +3,12 @@
 ####################################
 
 # Load required libraries
-library(Biostrings)
-library(ggplot2)
-library(tidyr)
-library(dplyr)
-library(reshape2)
-library(plotly)
+# library(Biostrings)
+# library(ggplot2)
+# library(tidyr)
+# library(dplyr)
+# library(reshape2)  # if you are using tidyr, probably dont need this.
+# library(plotly)
 
 #######################################################
 # get_bp_count: Get Nucleotide Counts
