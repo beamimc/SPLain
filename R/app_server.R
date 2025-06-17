@@ -1,5 +1,4 @@
-server <- function(input, output, session, data) {
-  
+app_server <- function(input, output, session, data) {
   se <- data$se
   exons <- data$exons
   condition_choices_df <- data$condition_choices

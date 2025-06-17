@@ -34,34 +34,35 @@
 # devtools::load_all()
 
 # Set Working Directory and Source Scripts -------------------------------------
-setwd(here::here())  
-wd <- getwd() 
+# setwd(here::here())
+# wd <- getwd()
 
-app <- function(se, exons, app_dir = ".") {
-  
+#' @export
+SPLain_app <- function(se, exons, app_dir = ".") {
+
   #load functions in app/R/
-  helpers_env <- new.env()
-  r_scripts <- list.files(file.path(app_dir, "R"), pattern = "\\.R$", full.names = TRUE)
-  invisible(lapply(r_scripts, function(f) source(f, local = helpers_env)))
-  list2env(as.list(helpers_env), envir = environment())
-  
+  # helpers_env <- new.env()
+  # r_scripts <- list.files(file.path(app_dir, "R"), pattern = "\\.R$", full.names = TRUE)
+  # invisible(lapply(r_scripts, function(f) source(f, local = helpers_env)))
+  # list2env(as.list(helpers_env), envir = environment())
+
   #load data
   data <- list(se = se, exons = exons)
-  se <- data$se 
-  
-  condition_choices_df <- parse_saturnDTU_conditions(see)
+  # se <- data$se
+
+  condition_choices_df <- parse_saturnDTU_conditions(se)
   data$condition_choices <-  condition_choices_df
-  
-  
-  source(file.path(app_dir, "ui.R"), local = TRUE)
-  ui <- build_ui(condition_choices)
-  server_func <- source(file.path(app_dir, "server.R"), local = TRUE)$value
-  
+
+
+  # source(file.path(app_dir, "ui.R"), local = TRUE)
+  app_ui <- build_ui(condition_choices)
+  # server_func <- source(file.path(app_dir, "server.R"), local = TRUE)$value
+
   #launch App
   shinyApp(
-    ui = ui,
+    ui = app_ui,
     server = function(input, output, session) {
-      server_func(input, output, session, data)
+      app_server(input, output, session, data = data)
     }
   )
 }

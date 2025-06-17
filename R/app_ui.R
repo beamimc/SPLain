@@ -1,6 +1,6 @@
 build_ui <- function(condition_choices) {
-  
-  page_sidebar(
+
+  bslib::page_sidebar(
     title   = "SPLain",
     theme   = bslib::bs_theme(version = 5, bootswatch = "cosmo"),
 
