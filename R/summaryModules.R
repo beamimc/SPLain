@@ -63,7 +63,7 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
 
 
     # Output: DT table
-    output$gene_table <- renderDT({
+    output$gene_table <- DT::renderDT({
       datatable(
         gene_df(),
         selection = "multiple",

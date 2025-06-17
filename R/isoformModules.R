@@ -136,11 +136,11 @@ isoformAnalysisServer <- function(id, se, exons, dtu_df, sig_res, selected_condi
       if (length(gene_info) > 0) gene_info else "Select a gene to see description."
     })
 
-    output$dtu_table <- renderDT({
+    output$dtu_table <- DT::renderDT({
       datatable(dtu_df(), selection = "single", options = list(pageLength = 5))
     })
 
-    output$go_table <- renderDT({
+    output$go_table <- DT::renderDT({
       req(selected_gene())
       go_data <- get_GO(selected_gene())
       datatable(go_data, options = list(pageLength = 5))
