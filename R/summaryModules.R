@@ -21,7 +21,7 @@ summaryStatsUI <- function(id) {
           ),
           tags$div(
             class = "card-body",
-            withSpinner(
+            shinycssloaders::withSpinner(
               plotOutput(ns("go_plot"), width = "100%"),
               type = 4,
               color = "#0d6efd"
