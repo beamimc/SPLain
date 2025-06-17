@@ -106,7 +106,7 @@ exonLevelServer <- function(id, exons, dtu_df, x_flat, sig_res) {
       )
     })
 
-    output$exon_level_plot <- renderPlotly({
+    output$exon_level_plot <- plotly::renderPlotly({
       req(selected_gene(), downstream_data())
       plot_downreg_exons(exons, selected_gene(), sig_res(), downstream_data()$exons)
     })

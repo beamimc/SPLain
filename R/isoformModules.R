@@ -157,7 +157,7 @@ isoformAnalysisServer <- function(id, se, exons, dtu_df, sig_res, selected_condi
     #   list(src = plot_path(), contentType = "image/png", width = "100%", height = "auto")
     # }, deleteFile = FALSE)
     #
-    output$isoform_plot <- renderPlotly({
+    output$isoform_plot <- plotly::renderPlotly({
       req(selected_gene())
       plot_isoforms_wiggle(exons, selected_gene(), sig_res())
     })
@@ -169,14 +169,14 @@ isoformAnalysisServer <- function(id, se, exons, dtu_df, sig_res, selected_condi
     })
 
 
-    output$barplot <- renderPlotly({
+    output$barplot <- plotly::renderPlotly({
       req(mean_diffs_DTU(), pvals())
       barplot_meandifs(mean_diffs_DTU(), pvals(), txp_colors())
 
 
     })
 
-    output$lineplot <- renderPlotly({
+    output$lineplot <- plotly::renderPlotly({
       req(prop())
       cd1 <- selected_conditions()$cd1
       cd2 <- selected_conditions()$cd2
