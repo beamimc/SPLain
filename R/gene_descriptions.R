@@ -5,7 +5,7 @@
 get_description <-function(gene_symbol){
 
   # Get gene symbol
-  gene_ensembl <- mapIds(org.Hs.eg.db,
+  gene_ensembl <- AnnotationDbi::mapIds(org.Hs.eg.db,
                         keys = gene_symbol,
                         column = "ENSEMBL",
                         keytype = "SYMBOL",
@@ -13,7 +13,7 @@ get_description <-function(gene_symbol){
   gene_ensembl <- gene_ensembl[[1]]
   
   # Get full gene name/description
-  gene_description <- mapIds(org.Hs.eg.db,
+  gene_description <- AnnotationDbi::mapIds(org.Hs.eg.db,
                              keys = gene_symbol,
                              column = "GENENAME",
                              keytype = "SYMBOL",
@@ -28,7 +28,7 @@ get_description <-function(gene_symbol){
 get_GO <- function(gene_symbol){
   
   # Map SYMBOL -> GO terms (returns a list if multiVals="list")
-  go_terms <- mapIds(org.Hs.eg.db,
+  go_terms <- AnnotationDbi::mapIds(org.Hs.eg.db,
                      keys = gene_symbol,
                      column = "GO",
                      keytype = "SYMBOL",
@@ -42,7 +42,7 @@ get_GO <- function(gene_symbol){
   go_df$GO_name <- Term(go_df$GO)
   
   # Add ontology if desired
-  go_df$ONTOLOGY <- mapIds(org.Hs.eg.db,
+  go_df$ONTOLOGY <- AnnotationDbi::mapIds(org.Hs.eg.db,
                            keys = go_df$GO,
                            column = "ONTOLOGY",
                            keytype = "GO",
