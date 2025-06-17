@@ -36,6 +36,14 @@
 # Set Working Directory and Source Scripts -------------------------------------
 # setwd(here::here())
 # wd <- getwd()
+#
+
+debug <- function(obj) {
+  expr <- substitute(obj)
+  cat(paste("Debugging:", deparse(expr)), "\n\n")
+  print(obj)
+  cat("\n")
+}
 
 #' @export
 SPLain_app <- function(se, exons, app_dir = ".") {
