@@ -7,7 +7,7 @@ exonLevelUI <- function(id) {
       
       column(width = 6,
              tags$h4("Significant DTU transcripts"),
-             DTOutput(ns("dtu_table"))
+             DT::DTOutput(ns("dtu_table"))
       ),
       column(width = 6,
              tags$div(class = "card mb-3",

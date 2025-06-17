@@ -12,7 +12,7 @@ isoformAnalysisUI <- function(id) {
           width = 6,
           style = "height: 100%; overflow-y: auto;",
           tags$h4("Significant DTU transcripts"),
-          DTOutput(ns("dtu_table"))
+          DT::DTOutput(ns("dtu_table"))
         ),
         # Gene description + GO (right)
         column(
@@ -25,9 +25,9 @@ isoformAnalysisUI <- function(id) {
           tabsetPanel(
             id   = ns("go_tabs"),
             type = "tabs",
-            tabPanel("GO Terms", 
-                     DTOutput(ns("go_table"))),
-            # tabPanel("GO Graph", 
+            tabPanel("GO Terms",
+                     DT::DTOutput(ns("go_table"))),
+            # tabPanel("GO Graph",
             #          plotOutput(ns("go_plot"),
             #                     )
           )

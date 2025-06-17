@@ -6,7 +6,7 @@ summaryStatsUI <- function(id) {
         width = 4,
         tags$h4("Genes with DTU isoforms"),
         checkboxInput(ns("select_all"), "Select All Genes", value = FALSE),
-        DTOutput(ns("gene_table")),
+        DT::DTOutput(ns("gene_table")),
         br(),
         actionButton(ns("run_go"), "Run GO", class = "btn btn-primary mt-2")
       ),
