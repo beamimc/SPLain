@@ -172,7 +172,7 @@ get_sliding_windows <- function(upstr_ranges, # input is GRanges object
     # Create a new column combining window label and nucleotide (e.g., "w1_A")
     mutate(Window_Nucleotide = paste0(window_label, "_", Nucleotide)) %>%
     # Select only the columns needed for pivoting: partition, the combined label, and value
-    select(partition, Window_Nucleotide, Value) %>%
+    dplyr::select(partition, Window_Nucleotide, Value) %>%
     # Pivot wider so that each Window_Nucleotide becomes its own column
     pivot_wider(
       id_cols = partition,
@@ -180,7 +180,7 @@ get_sliding_windows <- function(upstr_ranges, # input is GRanges object
       values_from = Value
     ) %>%
     # Remove the partition column
-    select(-partition)
+    dplyr::select(-partition)
 
   final_df
   matrix_df <- as.matrix(final_df)
@@ -345,7 +345,7 @@ barplot_bppercent2 <- function(mat1, mat2,
          y = "%",
          title = "Percentage of bp in exon's upstream region")
 
-  ggplotly(p)
+  plotly::ggplotly(p)
 }
 
 #######################################################

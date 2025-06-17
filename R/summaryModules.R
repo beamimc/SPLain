@@ -64,7 +64,7 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
 
     # Output: DT table
     output$gene_table <- DT::renderDT({
-      datatable(
+      DT::datatable(
         gene_df(),
         selection = "multiple",
         options = list(pageLength = 5)
@@ -79,9 +79,9 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
       all_rows <- seq_len(nrow(genes))
 
       if (isTRUE(input$select_all)) {
-        selectRows(proxy, all_rows)
+        DT::selectRows(proxy, all_rows)
       } else {
-        selectRows(proxy, NULL)
+        DT::selectRows(proxy, NULL)
       }
     })
 
@@ -93,7 +93,7 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
       } else {
         NULL                       # clear
       }
-      selectRows(proxy, rows)
+      DT::selectRows(proxy, rows)
     })
 
     observe({

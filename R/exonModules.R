@@ -78,7 +78,7 @@ exonLevelServer <- function(id, exons, dtu_df, x_flat, sig_res) {
     })
 
     output$dtu_table <- DT::renderDT({
-      datatable(dtu_df(), selection = "single", options = list(pageLength = 5))
+      DT::datatable(dtu_df(), selection = "single", options = list(pageLength = 5))
     })
 
     # Reactive: Downregulated exons and windows

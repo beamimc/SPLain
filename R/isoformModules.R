@@ -137,13 +137,13 @@ isoformAnalysisServer <- function(id, se, exons, dtu_df, sig_res, selected_condi
     })
 
     output$dtu_table <- DT::renderDT({
-      datatable(dtu_df(), selection = "single", options = list(pageLength = 5))
+      DT::datatable(dtu_df(), selection = "single", options = list(pageLength = 5))
     })
 
     output$go_table <- DT::renderDT({
       req(selected_gene())
       go_data <- get_GO(selected_gene())
-      datatable(go_data, options = list(pageLength = 5))
+      DT::datatable(go_data, options = list(pageLength = 5))
     })
 
     output$go_plot <- renderPlot({

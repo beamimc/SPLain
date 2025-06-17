@@ -153,8 +153,8 @@ line_plot_txp_comparison  <- function(se,
          ) +
 
     theme(axis.text.x = element_text(angle = 0))
-  ggplotly(p)%>%
-    layout(legend = list(
+  plotly::ggplotly(p) %>%
+    plotly::layout(legend = list(
       orientation = "h",      # horizontal keys
       x           = 0.5,      # centered horizontally
       xanchor     = "center",
@@ -203,8 +203,8 @@ barplot_meandifs <- function(mean_diffs_DTU, pvals,
     theme_classic() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-  ggplotly(p) %>%
-    layout(showlegend = FALSE)
+  plotly::ggplotly(p) %>%
+    plotly::layout(showlegend = FALSE)
     # layout(legend = list(
     #   orientation = "h",
     #   x = 0.5,
