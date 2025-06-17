@@ -36,23 +36,23 @@ summaryStatsUI <- function(id) {
 summaryStatsServer <- function(id, dtu_df, sig_res) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
-    
+
     # Reactive gene table
     gene_df <- reactive({
       dtu_df() |> dplyr::distinct(Symbol)
     })
-    
+
     # Reactive: genes selected by user
     selected_gene_list <- reactive({
       genes <- gene_df()
-      
+
       # compute selection indices
       sel <- if (isTRUE(input$select_all)) {
         seq_len(nrow(genes))  # all row indices
       } else {
         input$gene_table_rows_selected
       }
-      
+
       # return selected gene symbols
       if (!is.null(sel) && length(sel) > 0) {
         genes$Symbol[sel]
@@ -60,8 +60,8 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
         genes$Symbol[1]  # fallback
       }
     })
-    
-    
+
+
     # Output: DT table
     output$gene_table <- renderDT({
       datatable(
@@ -71,31 +71,31 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
       )
     })
 
-    
+
     proxy <- dataTableProxy(ns("gene_table"))
-    
+
     observeEvent(input$select_all, {
       genes <- gene_df()
       all_rows <- seq_len(nrow(genes))
-      
+
       if (isTRUE(input$select_all)) {
         selectRows(proxy, all_rows)
       } else {
         selectRows(proxy, NULL)
       }
     })
-    
+
     proxy <- dataTableProxy("gene_table", session = session)
-    
+
     observeEvent(input$select_all, {
       rows <- if (isTRUE(input$select_all)) {
         seq_len(nrow(gene_df()))   # all rows
       } else {
         NULL                       # clear
       }
-      selectRows(proxy, rows)     
+      selectRows(proxy, rows)
     })
-    
+
     observe({
       cat("Final selected genes:\n")
       print(selected_gene_list())
@@ -106,7 +106,7 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
       req(selected_gene_list())
       stored_genes(selected_gene_list())
     })
-    
+
     # Render GO plot
     output$go_plot <- renderPlot({
       req(stored_genes())
