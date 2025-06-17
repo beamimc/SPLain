@@ -230,7 +230,7 @@ plot_updownstream_windows <- function(df1, df2,
   # reshape to long form, keeping a replicate ID
   longify <- function(df, set_label) {
     as.data.frame(df) %>%
-      tibble::rownames_to_column("replicate") %>%
+      tibble::rownames_to_shiny::column("replicate") %>%
       pivot_longer(
         cols = -replicate,
         names_to  = c("window", "nt"),

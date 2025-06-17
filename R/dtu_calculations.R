@@ -61,7 +61,7 @@ get_dtu_column <- function(se, cd1, cd2) {
 
 
 get_sig_res <- function(se, fdr_threshold, cd1, cd2){
-  dtu_column <- get_dtu_column(se, cd1, cd2)
+  dtu_column <- get_dtu_shiny::column(se, cd1, cd2)
   column <- dtu_column$column_name
   dtu_direction <- dtu_column$direction
   
@@ -138,9 +138,9 @@ calc_prop <- function(se, symbol, sig_res) {
   prop <- t(cts) / colSums(cts)
   
   sig_ids <- sig_res %>%
-    filter(symbol == symbol) %>%
-    pull(isoform_id)
-  
+    dplyr::filter(symbol == symbol) %>%
+    dplyr::pull(isoform_id)
+
   prop <- prop[, colnames(prop) %in% sig_ids, drop = FALSE]
   return(prop)
 }
@@ -161,9 +161,9 @@ calc_mean_diff_DTU <- function(se, gene_symbol, sig_res) {
   names(mean_diffs_DTU) <- rownames(cts)  # Use transcript IDs as names
   
   sig_ids <- sig_res %>%
-    filter(symbol == gene_symbol) %>%
-    pull(isoform_id)
-  
+    dplyr::filter(symbol == gene_symbol) %>%
+    dplyr::pull(isoform_id)
+
   mean_diffs_DTU <- mean_diffs_DTU[ sig_ids ]
   return(mean_diffs_DTU)
 }
@@ -177,9 +177,9 @@ get_pvals <- function(se, gene_symbol, sig_res) {
   pvals <- rowData(se[rowData(se)$symbol == gene_symbol, ])[[dtu_column]]$empirical_pval
   names(pvals) <- rownames(rowData(se[rowData(se)$symbol == gene_symbol, ]))
   sig_ids <- sig_res %>%
-    filter(symbol == gene_symbol) %>%
-    pull(isoform_id)
-  
+    dplyr::filter(symbol == gene_symbol) %>%
+    dplyr::pull(isoform_id)
+
   pvals <- pvals[ sig_ids ]
   return(pvals)
 }

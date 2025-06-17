@@ -16,7 +16,7 @@ summaryStatsUI <- function(id) {
         tags$div(
           class = "card mb-3",
           tags$div(
-            class = "card-header bg-primary text-white", 
+            class = "card-header bg-primary text-white",
             "Gene Ontology"
           ),
           tags$div(

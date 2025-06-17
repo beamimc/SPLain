@@ -22,9 +22,9 @@ server <- function(input, output, session, data) {
   # Dynamically update cd2 based on selected cd1
   observeEvent(input$cd1, {
     req(input$cd1)
-    valid_cd2 <- condition_choices_df |> 
-      filter(cd1 == input$cd1) |> 
-      pull(cd2) |> 
+    valid_cd2 <- condition_choices_df |>
+      dplyr::filter(cd1 == input$cd1) |>
+      dplyr::pull(cd2) |>
       unique()
     
     updateRadioButtons(session, "cd2", choices = valid_cd2, selected = valid_cd2[1])
