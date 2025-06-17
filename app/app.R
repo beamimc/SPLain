@@ -49,7 +49,7 @@ app <- function(se, exons, app_dir = ".") {
   data <- list(se = se, exons = exons)
   se <- data$se 
   
-  condition_choices_df <- parse_saturnDTU_conditions(see)
+  condition_choices_df <- parse_saturnDTU_conditions(se)
   data$condition_choices <-  condition_choices_df
   
   
