@@ -72,7 +72,7 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
     })
 
 
-    proxy <- dataTableProxy(ns("gene_table"))
+    proxy <- DT::dataTableProxy(ns("gene_table"))
 
     observeEvent(input$select_all, {
       genes <- gene_df()
@@ -85,7 +85,7 @@ summaryStatsServer <- function(id, dtu_df, sig_res) {
       }
     })
 
-    proxy <- dataTableProxy("gene_table", session = session)
+    proxy <- DT::dataTableProxy("gene_table", session = session)
 
     observeEvent(input$select_all, {
       rows <- if (isTRUE(input$select_all)) {
