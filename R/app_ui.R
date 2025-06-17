@@ -6,7 +6,7 @@ build_ui <- function(condition_choices) {
 
     sidebar = sidebarPanel(
       width = 12,
-      
+
       fluidRow(
         column(
           width = 6,
@@ -29,19 +29,19 @@ build_ui <- function(condition_choices) {
       ),
       actionButton("apply_pair", "Apply comparison"),
       textOutput("current_comparison"),
-      
-      
+
+
       br(), br(),
-      
+
       sliderInput("fdr_threshold", "FDR threshold:",
                   min = 0, max = 0.5, value = 0.05, step = 0.01),
-      
+
       actionButton("apply_fdr", "Apply FDR Filter"),
       textOutput("current_fdr"),
-      
-      
+
+
       br(), br(),
-      
+
       radioButtons(
         inputId = "exon_filter",
         label = "Select structural change:",
@@ -49,7 +49,7 @@ build_ui <- function(condition_choices) {
         selected = "Downregulated exon"
       )
     ),
-    
+
     tabsetPanel(
       id = "main_tabs",
       tabPanel("DTU Exploration", value = "dtu", isoformAnalysisUI("isoform")),
