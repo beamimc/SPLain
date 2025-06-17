@@ -107,13 +107,13 @@ get_plot_data <- function(se,
   condition_subset <- se$condition[subset_indices]
 
   # Convert to long format for ggplot
-  plot_data <- melt(prop_subset)
+  plot_data <- reshape2::melt(prop_subset)
   colnames(plot_data) <- c("Sample", "Transcript", "Proportion")
   # add conditions
   sample_metadata <- as.data.frame(colData(se)[, c("sample_id", "condition")])
   plot_data <- merge(plot_data, sample_metadata, by.x = "Sample", by.y = "sample_id") #inner joins
   plot_data |>
-    rename(Condition = condition)
+    dplyr::rename(Condition = condition)
   return(plot_data)
 
 }

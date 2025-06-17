@@ -48,7 +48,7 @@ table <- gr |>
     range = max(end) - min(start),
     start = min(start),
     end = max(end)
-    
+
     )|>
   tibble::as_tibble() |> print(n=25)
 
@@ -63,7 +63,7 @@ df2 <- table %>%
     ref_start = start[which.max(range)],
     ref_end   = end  [which.max(range)]
   ) %>%
-  ungroup() %>%
+  dplyr::ungroup() %>%
   # compute raw overlap length and then the score
   mutate(
     overlap = pmax(0, pmin(end, ref_end) - pmax(start, ref_start)),
@@ -73,4 +73,3 @@ df2 <- table %>%
 
 
 df2 |> filter(gene == "ENSG00000145730.20")
-

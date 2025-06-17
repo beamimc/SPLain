@@ -88,6 +88,7 @@ get_windows<- function(upstr_ranges, # input is GRanges object
 
   n_windows <- width_upstream / window_width # number of windows generated given the total region length
   windows <- upstr_ranges |> tile_ranges(window_width) # divide into windows
+  debug(Hsapiens)
   seq_windows <-  Hsapiens |>
     Biostrings::getSeq(windows) |>
     Biostrings::RNAStringSet()
@@ -159,7 +160,7 @@ get_sliding_windows <- function(upstr_ranges, # input is GRanges object
       dplyr::n() - row_number() + 1       # For '-' strand: reverse order
     },
     window_label = paste0("w", window_order)) %>%
-    ungroup()
+    dplyr::ungroup()
 
   # Create a new data frame with one row per partition and columns for each window-nucleotide combination
   final_df <- windows_df %>%
@@ -174,7 +175,7 @@ get_sliding_windows <- function(upstr_ranges, # input is GRanges object
     # Select only the columns needed for pivoting: partition, the combined label, and value
     dplyr::select(partition, Window_Nucleotide, Value) %>%
     # Pivot wider so that each Window_Nucleotide becomes its own column
-    pivot_wider(
+    tidyr::pivot_wider(
       id_cols = partition,
       names_from = Window_Nucleotide,
       values_from = Value
@@ -383,7 +384,7 @@ plot_exon_summary <- function(spliced_exons_windows,
   sub_matrix_spliced <- spliced_exons_windows[, selected_cols_spliced, drop = FALSE]
 
   # Convert spliced matrix to long format and label dataset as "Spliced"
-  df_spliced <- melt(sub_matrix_spliced, varnames = c("Row", "Window"), value.name = "Value")
+  df_spliced <- reshape2::melt(sub_matrix_spliced, varnames = c("Row", "Window"), value.name = "Value")
   df_spliced$Dataset <- "Downregulated"
 
   # -------------------------------
@@ -398,7 +399,7 @@ plot_exon_summary <- function(spliced_exons_windows,
     sub_matrix_nonspliced <- nonspliced_exons_windows[, selected_cols_nonspliced, drop = FALSE]
 
     # Convert nonspliced matrix to long format and label dataset as "Non-Spliced"
-    df_nonspliced <- melt(sub_matrix_nonspliced, varnames = c("Row", "Window"), value.name = "Value")
+    df_nonspliced <- reshape2::melt(sub_matrix_nonspliced, varnames = c("Row", "Window"), value.name = "Value")
     df_nonspliced$Dataset <- "Non-Regulated"
 
     # Combine both datasets
