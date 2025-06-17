@@ -50,7 +50,9 @@ Imports:
     reshape2,
     viridis,
     RColorBrewer,
-    here
+    here,
+    assertthat,
+    GenomeInfoDb
 Depends:
     R (>= 4.4.0)
 Suggests:
@@ -59,8 +61,6 @@ Suggests:
     rmarkdown,
     testthat,
     airway,
-    IRanges,
-    here
 LazyData: true
 URL: https://github.com/beamimc/SPLain, https://Beamimc.github.io/SPLain
 BugReports: https://github.com/beamimc/SPLain/issues
