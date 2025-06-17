@@ -10,7 +10,7 @@ summaryStatsUI <- function(id) {
         br(),
         actionButton(ns("run_go"), "Run GO", class = "btn btn-primary mt-2")
       ),
-      
+
       column(
         width = 8,
         tags$div(
