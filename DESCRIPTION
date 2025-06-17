@@ -15,14 +15,12 @@ VignetteBuilder: knitr
 Imports:
     BiocGenerics,
     BiocStyle,
-    GenomicRanges,
     IRanges,
     S4Vectors,
     SummarizedExperiment,
     rlang,
     dplyr,
     tidyr,
-    ggplot2,
     ggrepel,
     stats,
     utils,
@@ -51,8 +49,11 @@ Imports:
     RColorBrewer,
     here,
     assertthat,
-    GenomeInfoDb
+    GenomeInfoDb,
+    tibble
 Depends:
+    GenomicRanges,
+    ggplot2,
     R (>= 4.4.0),
     shiny
 Suggests:
