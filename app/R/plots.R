@@ -1,5 +1,5 @@
 
-get_transcript_colors <- function(transcripts, palette_name = "Set2") {
+get_transcript_colors <- function(transcripts, palette_name = "Accent") {
   transcripts <- sort(unique(transcripts))  # ensure consistent order
   n_colors <- max(3, length(transcripts))
   
@@ -245,8 +245,8 @@ plot_updownstream_windows <- function(df1, df2,
   nwin <- length(unique(l1$window))   # e.g. 8
   xmin <- nwin + 0.5
   xmax <- nwin + gap + 0.5
-  ymin <- 0.2
-  ymax <- 0.4
+  ymin <- 0.25
+  ymax <- 0.35
   
   # assign numeric x positions
   l1 <- l1 %>%
@@ -267,6 +267,9 @@ plot_updownstream_windows <- function(df1, df2,
   
   all_breaks <- c(xpos1, xpos2)
   all_labels <- c(labs1, labs2)
+  # version that blanks out every 2nd label
+  labs2show <- all_labels
+  labs2show[seq(2, length(labs2show), by = 2)] <- ""
   
   # now plot
   ggplot(combined,
@@ -285,7 +288,7 @@ plot_updownstream_windows <- function(df1, df2,
              x     = (xmin + xmax)/2,
              y     = (ymin + ymax)/2,
              label = exon_label,
-             size  = 3,        # text size
+             size  = 8,        # text size
              color = "black",  # choose contrasting color
              fontface = "bold"
     ) +
@@ -302,13 +305,13 @@ plot_updownstream_windows <- function(df1, df2,
                                      downstream="solid"),
                           guide = FALSE) +
     scale_x_continuous(breaks = all_breaks,
-                       labels = all_labels) +
+                       labels = labs2show) +
     scale_y_continuous(limits = c(0,0.7), expand = c(0,0)) +
-    theme_classic() +
+    theme_classic(base_size = 22) +
     labs(x = "Relative location (bp)",
          y = "Nucleotide percentage (%)",
          color    = "Nucleotide") +
-    theme(legend.position = "top",
+    theme(legend.position = "top", legend.text  = element_text(size = 25),
           axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
   
 }

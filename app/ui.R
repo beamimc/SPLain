@@ -1,9 +1,35 @@
 build_ui <- function(condition_choices) {
-  
+    # at the very top of ui.R
+  message("📍 Working directory is: ", normalizePath("."))
+  message("📂 Files here: ", paste(list.files(), collapse = ", "))
+  message("📂 www/: ", paste(list.files("www"), collapse = ", "))
+
   page_sidebar(
-    title   = "SPLain",      
-    theme   = bs_theme(version = 5, bootswatch = "cosmo"),
-    
+    title = tags$span(
+    # 1. Your custom icon, sized & margin-adjusted
+    tags$img(
+      src    = "assets/logo_white.png",     # must live in www/icon_splain.png
+      height = "50px",           # adjust to taste
+      style  = "vertical-align: middle; margin-right: 8px;"
+    ),
+    # 2. Your app title
+    "SPLain",
+    style = "font-size:2rem; font-weight:bold; vertical-align: middle;"
+  ),
+      
+    theme   = bs_theme(version = 5, bootswatch = "cosmo",    primary    = "#3d65a1"  ), 
+       # Global CSS to increase overall font size
+    tags$style(HTML("
+      body, .sidebar, .card, .nav-tabs, .form-label, h1, h2, h3, h4, h5, h6 {
+        font-size: 22px !important;
+      }
+      .card-header {
+        font-size: 22px !important;
+      }
+
+    ")),
+
+
     sidebar = sidebarPanel(
       width = 12,
       

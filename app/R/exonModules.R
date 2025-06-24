@@ -116,7 +116,7 @@ exonLevelServer <- function(id, exons, dtu_df, x_flat, sig_res) {
       plot_updownstream_windows(
         downstream_data()$upstream,
         downstream_data()$downstream,
-        exon_label = "downreg exon"
+        exon_label = "downreg"
       )
     })
     
@@ -125,7 +125,7 @@ exonLevelServer <- function(id, exons, dtu_df, x_flat, sig_res) {
       plot_updownstream_windows(
         nonreg_data()$upstream,
         nonreg_data()$downstream,
-        exon_label = "nonreg exon"
+        exon_label = "non-reg"
       )
     })
     

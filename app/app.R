@@ -38,6 +38,10 @@ setwd(here::here())
 wd <- getwd() 
 
 app <- function(se, exons, app_dir = ".") {
+  shiny::addResourcePath(
+    prefix = "assets",
+    directoryPath = file.path(app_dir, "www")
+  )
   
   #load functions in app/R/
   helpers_env <- new.env()

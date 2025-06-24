@@ -1,56 +1,58 @@
-
-# Module UI functions
 isoformAnalysisUI <- function(id) {
   ns <- NS(id)
   tagList(
     fluidPage(
-      # ─── First Row: DTU & GO, fixed height, light gray ─────────────────────
+
+      # Global DT table font-size styling and fixed smaller height for first row
+      tags$style(HTML("
+        .dataTables_wrapper table {
+          font-size: 20px;
+        }
+        .small-row {
+          height: 250px;  /* Adjust height as needed */
+           auto;
+        }
+      ")),
+
+      # ─── First Row (smaller height) ─────────────────────────────
       fluidRow(
-        class = "border-bottom p-3",   
+        class = "border-bottom p-3",   # <- added small-row class here
         # DTU table (left)
         column(
           width = 6,
-          style = "height: 100%; overflow-y: auto;",
           tags$h4("Significant DTU transcripts"),
           DTOutput(ns("dtu_table"))
         ),
         # Gene description + GO (right)
         column(
           width = 6,
-          style = "height: 100%; overflow-y: auto;",
           tags$div(
-            strong("Gene Description:"),
+            # strong("Gene Description:"),
             textOutput(ns("gene_description"))
           ),
           tabsetPanel(
             id   = ns("go_tabs"),
             type = "tabs",
-            tabPanel("GO Terms", 
-                     DTOutput(ns("go_table"))),
-            # tabPanel("GO Graph", 
-            #          plotOutput(ns("go_plot"),
-            #                     )
+            tabPanel("GO Terms", DTOutput(ns("go_table")))
           )
         )
       ),
-      # ─── Second Row: placeholder + combined plot column ─────────────────────
+
+      # ─── Second Row (larger height by default) ──────────────────
       fluidRow(
         class = "border-bottom p-3",
-        
+
         # Isoform Plot card (6 cols)
         column(
           width = 6,
           tags$div(class = "card mb-3",
-                   tags$div(class = "card-header bg-primary text-white", 
-                            "Isoform Structures"),
+                   tags$div(class = "card-header bg-primary text-white", "Isoform Structures"),
                    tags$div(class = "card-body",
-                            # imageOutput(ns("gene_plot"), width = "100%")
                             plotlyOutput(ns("isoform_plot"), width = "100%")
-                            
                    )
           )
         ),
-        
+
         # Mean Differences card (3 cols)
         column(
           width = 3,
@@ -62,22 +64,24 @@ isoformAnalysisUI <- function(id) {
                    )
           )
         ),
-        
+
         # Transcript Proportions card (3 cols)
         column(
           width = 3,
           tags$div(class = "card mb-3",
-                   tags$div(class = "card-header bg-primary text-white", "Transcript Proportions by Condition"),
+                   tags$div(class = "card-header bg-primary text-white", 
+                            "Transcript Proportions by Condition"),
                    tags$div(class = "card-body",
                             plotlyOutput(ns("lineplot"), width = "100%")
                    )
           )
         )
       )
-      
-    ) #fluidpage
-  )#taglist
+
+    ) # fluidPage
+  ) # tagList
 }
+
 
 
 # Module server functions
@@ -133,17 +137,18 @@ isoformAnalysisServer <- function(id, se, exons, dtu_df, sig_res, selected_condi
     output$gene_description <- renderText({
       req(selected_gene())
       gene_info <- get_description(selected_gene())
+      gene_info <- paste0("Gene description: ", gene_info)
       if (length(gene_info) > 0) gene_info else "Select a gene to see description."
     })
     
     output$dtu_table <- renderDT({
-      datatable(dtu_df(), selection = "single", options = list(pageLength = 5))
+      datatable(dtu_df(), selection = "single", options = list(pageLength = 3))
     })
     
     output$go_table <- renderDT({
       req(selected_gene())
       go_data <- get_GO(selected_gene())
-      datatable(go_data, options = list(pageLength = 5))
+      datatable(go_data, options = list(pageLength = 2))
     })
     
     output$go_plot <- renderPlot({
