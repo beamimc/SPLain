@@ -30,13 +30,7 @@ pal_pos <- col_numeric(
 
 # Custom palette function that applies the appropriate palette based on value
 custom_pal <- function(x) {
-  sapply(x, function(val) {
-    if (val < 0) {
-      pal_neg(val)
-    } else {
-      pal_pos(val)
-    }
-  })
+  dplyr::case_when(x < 0 ~ pal_neg(x), TRUE ~ pal_pos(x))
 }
 
 
@@ -67,7 +61,7 @@ get_sig_res <- function(se, fdr_threshold, cd1, cd2){
   
   sig_res <- rowData(se)[[column]] |>
     tibble::as_tibble() |>
-    dplyr::bind_cols(as.data.frame(rowData(se)[,1:4])) |>
+    dplyr::bind_cols(as.data.frame(rowData(se))) |>
     dplyr::filter(empirical_FDR < fdr_threshold) |>
     dplyr::select(gene_id, isoform_id, symbol, estimates, empirical_pval, empirical_FDR) |>
     dplyr::arrange(empirical_pval)
@@ -78,7 +72,12 @@ get_sig_res <- function(se, fdr_threshold, cd1, cd2){
                   dtu_direction,
                   cd1 = cd1,
                   cd2 = cd2)
-  
+
+  sig_res <- sig_res %>%
+    dplyr::mutate(
+      score = (1 - empirical_pval) * sign(estimates) * dtu_direction,  # Compute the score
+      computed_color = custom_pal(score)               # Apply your custom palette
+    )
   return(sig_res)
   
 }
