@@ -60,7 +60,7 @@ build_ui <- function(condition_choices) {
       br(), br(),
       
       sliderInput("fdr_threshold", "FDR threshold:",
-                  min = 0, max = 0.5, value = 0.05, step = 0.01),
+                  min = 0, max = 1, value = 0.05, step = 0.01),
       
       actionButton("apply_fdr", "Apply FDR Filter"),
       textOutput("current_fdr"),
