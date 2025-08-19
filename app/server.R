@@ -90,6 +90,9 @@ server <- function(input, output, session, data) {
     "isoform", se, exons, filtered_dtu_df,
     sig_res, selected_conditions, ref_assembly
   )
-  exonLevelServer("exon", exons, filtered_dtu_df, x_flat, sig_res)
+  exonLevelServer(
+    "exon", exons, filtered_dtu_df, x_flat, 
+    sig_res, ref_assembly
+    )
   summaryStatsServer("summary", filtered_dtu_df, sig_res)
 }

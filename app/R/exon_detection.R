@@ -57,26 +57,28 @@ get_nonreg_exons <- function(x_flat, downreg_exons) {
 
 
 get_downstream_from_GRanges <- function(GRanges,
+                                        ref_assembly,
                                         width_upstream = 100) {
   upstr_exons <- GRanges |>
     flank_downstream(width = width_upstream)
   # The result will be another GRanges object that still contains 158 ranges,
   # but each range now represents the upstream flanking region of the corresponding exon.
 
-  df <- get_sliding_windows(upstr_exons)
+  df <- get_sliding_windows(upstr_exons, ref_assembly = ref_assembly)
 
   return(df)
 }
 
 
 get_upstream_from_GRanges <- function(GRanges,
+                                      ref_assembly,
                                       width_upstream = 100) {
   upstr_exons <- GRanges |>
     flank_upstream(width = width_upstream)
   # The result will be another GRanges object that still contains 158 ranges,
   # but each range now represents the upstream flanking region of the corresponding exon.
 
-  df <- get_sliding_windows(upstr_exons)
+  df <- get_sliding_windows(upstr_exons, ref_assembly = ref_assembly)
 
   return(df)
 }
