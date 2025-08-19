@@ -19,6 +19,7 @@ source(file.path(app_dir, "app.R"))
 
 # Run the Shiny app with the provided data
 shiny::runApp(app(
+  ref_assembly = "hg38",
   se = se,
   exons = exons,
   app_dir = app_dir

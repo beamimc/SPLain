@@ -15,11 +15,15 @@ library(patchwork)
 library(SummarizedExperiment)
 library(GenomicFeatures)
 library(GenomicRanges)
+
 library(org.Hs.eg.db)
+library(org.Mm.eg.db)
+
 library(GO.db)
 library(biomaRt)
 library(Biostrings)
 library(BSgenome.Hsapiens.UCSC.hg38)
+library(BSgenome.Mmusculus.UCSC.mm39)
 
 library(clusterProfiler)
 library(enrichplot)
@@ -34,33 +38,36 @@ library(here)
 # devtools::load_all()
 
 # Set Working Directory and Source Scripts -------------------------------------
-setwd(here::here())  
-wd <- getwd() 
+setwd(here::here())
+wd <- getwd()
 
-app <- function(se, exons, app_dir = ".") {
+app <- function(ref_assembly, se, exons, app_dir = ".") {
   shiny::addResourcePath(
     prefix = "assets",
     directoryPath = file.path(app_dir, "www")
   )
-  
+
   #load functions in app/R/
   helpers_env <- new.env()
-  r_scripts <- list.files(file.path(app_dir, "R"), pattern = "\\.R$", full.names = TRUE)
+  r_scripts <- list.files(
+    file.path(app_dir, "R"),
+    pattern = "\\.R$",
+    full.names = TRUE
+  )
   invisible(lapply(r_scripts, function(f) source(f, local = helpers_env)))
   list2env(as.list(helpers_env), envir = environment())
-  
+
   #load data
-  data <- list(se = se, exons = exons)
-  se <- data$se 
-  
+  data <- list(se = se, exons = exons, ref_assembly = ref_assembly)
+  se <- data$se
+
   condition_choices_df <- parse_saturnDTU_conditions(se)
-  data$condition_choices <-  condition_choices_df
-  
-  
+  data$condition_choices <- condition_choices_df
+
   source(file.path(app_dir, "ui.R"), local = TRUE)
   ui <- build_ui(condition_choices)
   server_func <- source(file.path(app_dir, "server.R"), local = TRUE)$value
-  
+
   #launch App
   shinyApp(
     ui = ui,
