@@ -54,12 +54,13 @@ get_dtu_column <- function(se, cd1, cd2) {
 }
 
 
-get_sig_res <- function(se, fdr_threshold, cd1, cd2){
-  dtu_column <- get_dtu_column(se, cd1, cd2)
-  column <- dtu_column$column_name
-  dtu_direction <- dtu_column$direction
+get_sig_res <- function(se, fdr_threshold, dtu_column){
+  m <- stringr::str_match(dtu_column, "(?:.*_)?(.+?)_vs_(.+)$")
+  cd1 <- m[1,2]
+  cd2 <- m[1,3]
+  dtu_direction <- 1L
   
-  sig_res <- rowData(se)[[column]] |>
+  sig_res <- rowData(se)[[dtu_column]] |>
     tibble::as_tibble() |>
     dplyr::bind_cols(as.data.frame(rowData(se))) |>
     dplyr::filter(empirical_FDR < fdr_threshold) |>
@@ -68,7 +69,7 @@ get_sig_res <- function(se, fdr_threshold, cd1, cd2){
   
   sig_res <-  sig_res %>%
     dplyr::mutate(sign = sign(estimates),
-                  dtu_column = column,
+                  dtu_column = dtu_column,
                   dtu_direction,
                   cd1 = cd1,
                   cd2 = cd2)

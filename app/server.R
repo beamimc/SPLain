@@ -9,6 +9,15 @@ server <- function(input, output, session, data) {
     applied_fdr(input$fdr_threshold) # apply only when button is clicked
   })
 
+  # --- NEW: populate DTU column selector from rowData(se) -------------------
+  observe({
+    rd_names <- names(SummarizedExperiment::rowData(se))
+    dtu_cols <- grep("_vs_", rd_names, value = TRUE)
+    updateSelectInput(session, "dtu_column",
+                      choices = if (length(dtu_cols)) dtu_cols else "(no _vs_ columns found)",
+                      selected = if (length(dtu_cols)) dtu_cols[1] else character(0))
+  })
+  # -------------------------------------------------------------------------
 
   # Initialize cd1 choices
   observe({
@@ -66,10 +75,11 @@ server <- function(input, output, session, data) {
 
   # Define sig_res reactively based on the applied FDR
   sig_res <- reactive({
-    conds <- selected_conditions()
-    req(conds$cd1, conds$cd2)
-    get_sig_res(se, applied_fdr(), conds$cd1, conds$cd2)
+    req(input$dtu_column)
+    req(input$dtu_column %in% names(SummarizedExperiment::rowData(se)))
+    get_sig_res(se, applied_fdr(), input$dtu_column)
   })
+
 
   filtered_dtu_df <- reactive({
     dtu_df <- get_dtu_df(sig_res()) # use the cached reactive value
