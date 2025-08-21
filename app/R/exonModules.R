@@ -66,16 +66,18 @@ exonLevelUI <- function(id) {
 exonLevelServer <- function(id, exons, dtu_df, x_flat, sig_res, ref_assembly) {
   moduleServer(id, function(input, output, session) {
     selected_gene <- reactive({
-      sel <- input$dtu_table_rows_selected
-      if (!is.null(sel) && length(sel) == 1) {
-        dtu_df()[["Symbol"]][sel]
-      } else {
-        dtu_df()[["Symbol"]][1]
-      }
-    })
+  req(filtered_dtu())
+  df <- filtered_dtu()
+  sel <- input$dtu_table_rows_selected
+  idx <- if (!is.null(sel) && length(sel) == 1) sel else 1
+  df[["Symbol"]][idx]
+})
 
-    output$dtu_table <- renderDT({
-      datatable(dtu_df(), selection = "single", options = list(pageLength = 5))
+    
+
+    output$dtu_table <- DT::renderDT({
+      df <- filtered_dtu()
+      DT::datatable(df, selection = "single", options = list(pageLength = 5))
     })
 
     # Reactive: Downregulated exons and windows
@@ -103,6 +105,18 @@ exonLevelServer <- function(id, exons, dtu_df, x_flat, sig_res, ref_assembly) {
       )
     })
 
+    filtered_dtu <- reactive({
+      req(downstream_data(), dtu_df())
+      filter_txps <- names(downstream_data()$exons)
+      df <- dtu_df()
+      validate(need("Transcript" %in% names(df), "Column 'Transcript' not found in dtu_df()"))
+      out <- df[df[["Transcript"]] %in% filter_txps, , drop = FALSE]
+      validate(need(nrow(out) > 0, "No transcripts with downregulated exons"))
+      out
+    })
+
+    
+
     output$exon_level_plot <- renderPlotly({
       req(selected_gene(), downstream_data())
       plot_downreg_exons(exons, selected_gene(), sig_res(), downstream_data()$exons)
@@ -127,8 +141,8 @@ exonLevelServer <- function(id, exons, dtu_df, x_flat, sig_res, ref_assembly) {
     })
 
     output$plot_window_comparison <- renderPlot({
-      req(nonreg_data())
-      req(downstream_data())
+      req(nonreg_data(), 
+          downstream_data())
       plot_window_comparison(
         downstream_data()$upstream,
         nonreg_data()$upstream
