@@ -63,7 +63,7 @@ get_sig_res <- function(se, fdr_threshold, dtu_column){
   sig_res <- rowData(se)[[dtu_column]] |>
     tibble::as_tibble() |>
     dplyr::bind_cols(as.data.frame(rowData(se))) |>
-    dplyr::filter(empirical_FDR < fdr_threshold) |>
+    dplyr::filter(empirical_FDR <= fdr_threshold) |>
     dplyr::select(gene_id, isoform_id, symbol, estimates, empirical_pval, empirical_FDR) |>
     dplyr::arrange(empirical_pval)
   
