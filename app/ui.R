@@ -6,32 +6,44 @@ build_ui <- function(condition_choices) {
 
   page_sidebar(
     title = tags$span(
-    # 1. Your custom icon, sized & margin-adjusted
+    # Custom icon, sized & margin-adjusted
     tags$img(
       src    = "assets/logo_white.png",     # must live in www/icon_splain.png
-      height = "50px",           # adjust to taste
+      height = "50px",
       style  = "vertical-align: middle; margin-right: 8px;"
     ),
-    # 2. Your app title
+    # App title
     "SPLain",
     style = "font-size:2rem; font-weight:bold; vertical-align: middle;"
   ),
       
-    theme   = bs_theme(version = 5, bootswatch = "cosmo",    primary    = "#3d65a1"  ), 
-       # Global CSS to increase overall font size
+    theme   = bs_theme(version = 5, bootswatch = "cosmo",    primary    = "#3d65a1" ,
+    
+            # keep body text at the default ~16px
+        "font-size-base" = "1rem",
+        # shrink headings
+        "h1-font-size" = "1.25rem",  # ~20px
+        "h2-font-size" = "1.125rem", # ~18px
+        "h3-font-size" = "1rem",     # ~16px
+        "h4-font-size" = "0.95rem",  # ~15.2px
+        "h5-font-size" = "0.9rem",   # ~14.4px
+        "h6-font-size" = "0.875rem"),  # ~14px
+    #    # Global CSS to increase overall font size
     tags$style(HTML("
-      body, .sidebar, .card, .nav-tabs, .form-label, h1, h2, h3, h4, h5, h6 {
-        font-size: 22px !important;
+      body, .sidebar, .card, .nav-tabs, .form-label, h1, h2, {
+        font-size: 16px !important;
       }
       .card-header {
-        font-size: 22px !important;
+        font-size: 16px !important;
       }
+      table.dataTable, .table {
+        font-size: 16px !important;
+      }
+      ")),
 
-    ")),
-
-
-    sidebar = sidebarPanel(
-  width = 12,
+    sidebar = bslib::sidebar(
+      width = "300px",  
+      class = "p-2",
 
   # pick the DTU result column
   selectInput(
