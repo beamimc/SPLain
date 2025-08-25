@@ -56,8 +56,8 @@ get_dtu_column <- function(se, cd1, cd2) {
 
 get_sig_res <- function(se, fdr_threshold, dtu_column){
   m <- stringr::str_match(dtu_column, "(?:.*_)?(.+?)_vs_(.+)$")
-  cd1 <- m[1,2]
-  cd2 <- m[1,3]
+  cd1 <- m[1,3]
+  cd2 <- m[1,2]
   dtu_direction <- 1L
   
   sig_res <- rowData(se)[[dtu_column]] |>
