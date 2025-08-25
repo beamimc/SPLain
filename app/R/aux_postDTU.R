@@ -129,9 +129,9 @@ get_sliding_windows <- function(upstr_ranges, # input is GRanges object
                                 overlap = 5 # use overlap = 0 for non-overlapping windows
                                 ) {
   if (ref_assembly == "hg38") {
-    ref_genome <- Hsapiens # BSgenome.Hsapiens.UCSC.hg38
+    ref_bsgenome <- Hsapiens # BSgenome.Hsapiens.UCSC.hg38
   } else if (ref_assembly == "mm39") {
-    ref_genome <- Mmusculus # BSgenome.Mmusculus.UCSC.mm39
+    ref_bsgenome <- Mmusculus # BSgenome.Mmusculus.UCSC.mm39
   }
   # Calculate step size: if step == window_width, slide_ranges is equivalent to tile_ranges
   step <-  window_width - overlap 
@@ -139,7 +139,7 @@ get_sliding_windows <- function(upstr_ranges, # input is GRanges object
 
   windows <- upstr_ranges |> slide_ranges( width = window_width,  # GRanges
                                            step = step) # divide into windows
-  seq_windows <-  Hsapiens |>
+  seq_windows <-  ref_bsgenome |>
     getSeq(windows) |>
     RNAStringSet()  # RNAStringSet
   # The RNAStringSet result has n_windows * (# of exons) rows.
